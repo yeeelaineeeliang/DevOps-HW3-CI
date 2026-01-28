@@ -1,6 +1,6 @@
 # Library System Web Application (Flask)
 
-## Features / API Endpoints
+## API Endpoints
 
 ### 1. Health Check
 **GET** `/api/health`  
