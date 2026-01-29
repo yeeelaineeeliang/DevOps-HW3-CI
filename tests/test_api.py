@@ -24,7 +24,7 @@ def test_add_book_success(client):
 
 def test_add_book_missing_field_returns_400(client):
     resp = client.post("/api/add", json={"title": "Dune", "author": "Frank Herbert"})
-    assert resp.status_code in (400, 422) 
+    assert resp.status_code in (400, 422)
     data = resp.get_json()
     assert data["success"] is False
 
