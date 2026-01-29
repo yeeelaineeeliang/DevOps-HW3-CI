@@ -91,7 +91,7 @@ def register_routes(app):
                 jsonify(
                     {
                         "success": True,
-                        "message": f"{book['title']} checked out successfully in the inventory",
+                        "message": f"{book['title']} checked out successfully",
                         "book": {
                             "isbn": isbn,
                             "title": book["title"],
