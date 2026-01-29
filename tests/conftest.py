@@ -1,4 +1,9 @@
-import os
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
 import pytest
 from app import create_app
 
@@ -19,15 +24,3 @@ def app(tmp_path):
 @pytest.fixture
 def client(app):
     return app.test_client()
-
-
-@pytest.fixture
-def sample_inventory(app):
-    inventory_path = os.path.join(app.config["DATA_DIR"], "current_inventory.txt")
-
-    with open(inventory_path, "w") as f:
-        f.write("978-0-7432-7356-5|The Great Gatsby|F. Scott Fitzgerald|available\n")
-        f.write("978-0-452-28423-4|1984|George Orwell|available\n")
-        f.write("978-0-452-28424-1|Animal Farm|George Orwell|checked_out\n")
-
-    return True
