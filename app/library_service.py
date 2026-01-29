@@ -1,5 +1,6 @@
 import os
 
+
 class LibrarySystem:
     def __init__(self, data):
         self.data = data
@@ -9,41 +10,43 @@ class LibrarySystem:
     def load_inventory(self):
         filepath = os.path.join(self.data, "current_inventory.txt")
         try:
-            with open(filepath, "rt") as f:  
+            with open(filepath, "rt") as f:
                 for line in f:
                     if line.strip():
                         isbn, title, author, status = line.split(",")
                         self.inventory_map[isbn] = {
                             "title": title,
                             "author": author,
-                            "status": status.strip()
+                            "status": status.strip(),
                         }
         except FileNotFoundError:
             self.inventory_map = {}
 
-
     def save_inventory(self):
         filepath = os.path.join(self.data, "current_inventory.txt")
-        with open(filepath, "w") as f:  
+        with open(filepath, "w") as f:
             for isbn, book in self.inventory_map.items():
                 f.write(f"{isbn},{book['title']},{book['author']},{book['status']}\n")
 
     def get_inventory(self):
         return {
-            'books': [
-                {'isbn': isbn, **book}
-                for isbn, book in self.inventory_map.items()
+            "books": [
+                {"isbn": isbn, **book} for isbn, book in self.inventory_map.items()
             ],
-            'total_books': len(self.inventory_map),
-            'available': sum(1 for b in self.inventory_map.values() if b['status'] == 'available'),
-            'checked_out': sum(1 for b in self.inventory_map.values() if b['status'] == 'checked_out')
+            "total_books": len(self.inventory_map),
+            "available": sum(
+                1 for b in self.inventory_map.values() if b["status"] == "available"
+            ),
+            "checked_out": sum(
+                1 for b in self.inventory_map.values() if b["status"] == "checked_out"
+            ),
         }
 
     def add_book(self, title, author, isbn):
         self.inventory_map[isbn] = {
-            'title': title,
-            'author': author,
-            'status': "available"
+            "title": title,
+            "author": author,
+            "status": "available",
         }
         self.save_inventory()
         return True
@@ -65,12 +68,14 @@ class LibrarySystem:
             author_info = book_details.get("author", "").lower()
             title_info = book_details.get("title", "").lower()
             if search_input in author_info or search_input in title_info:
-                books.append({
-                    "isbn": isbn,
-                    "title": book_details["title"],
-                    "author": book_details["author"],
-                    "status": book_details["status"]
-                })
+                books.append(
+                    {
+                        "isbn": isbn,
+                        "title": book_details["title"],
+                        "author": book_details["author"],
+                        "status": book_details["status"],
+                    }
+                )
         return books
 
     def remove_book(self, isbn):
@@ -87,5 +92,3 @@ class LibrarySystem:
         self.inventory_map[isbn]["status"] = "available"
         self.save_inventory()
         return True
-
-
