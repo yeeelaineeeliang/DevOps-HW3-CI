@@ -57,7 +57,7 @@ def register_routes(app):
                 jsonify(
                     {
                         "success": True,
-                        "message": f"{data['title']} by {data['author']} added successfully",
+                        "message": f"{data['title']} by {data['author']} added",
                         "book": {
                             "isbn": data["isbn"],
                             "title": data["title"],
